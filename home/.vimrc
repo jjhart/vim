@@ -60,8 +60,8 @@ set laststatus=2
 set statusline =
 " File description
 set statusline +=%f\ %h%m%r%w
-" Name of the current function (needs tagbar.vim)
-set statusline +=\ {%{tagbar#currenttag('%s','')}}
+" Fully qualified name of the current function (needs tagbar.vim)
+set statusline +=\ {%{tagbar#currenttag('%s','','f')}}
 " Name of the current branch (needs fugitive.vim)
 set statusline +=\ %{fugitive#statusline()}
 " <current line> / <total lines> pct
@@ -141,6 +141,9 @@ nmap <leader>z ,FmZ,fkzf`Z,fjjj
 nmap <leader>tn ma:%s~\V @Test~ /*@Test*/~<CR>`a?@Test<CR>Bxxelxx`a:w<CR>
 " 'test-yes': uncomment @Test annotations, return cursor
 nmap <leader>ty ma:%s~\V/*@Test*/~@Test~<CR>`a:w<CR>
+
+" 'tagbar-toggle'
+nmap <leader>tb :TagbarToggle<CR>
 
 " horizontal rule
 imap <D-H> --------------------------------------------------------------------------------<CR>
