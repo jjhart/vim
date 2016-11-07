@@ -183,8 +183,8 @@ map <leader>pl :perldo
 " open new tab with path of current file expanded
 map <leader>e :tabedit <C-R>=expand("%:p:h") . "/" <CR>
 
-" set reflow wrapping to happen at 110
-set textwidth=110
+" set reflow wrapping to happen at 120
+set textwidth=120
 " .. but make sure it doesn't happen automatically
 set formatoptions-=t
 
