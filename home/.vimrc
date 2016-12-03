@@ -287,23 +287,6 @@ let g:agprg = 'ag --nogroup --nocolor --column --smart-case'
 nnoremap <leader>ag :w<CR> :Gcd<CR> :Ag<space>
 
 
-" syntastic file type tweaks
-let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['java','sh'] }
-map <leader>sc :SyntasticCheck<CR>
-
-" TODO - make java/syntastic faster by skipping maven where possible
-
-" for debugging syntax coloring
-function! <SID>SynStack()
-    if !exists("*synstack")
-        return
-    endif
-    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunc
-
-command! SynStack :call <SID>SynStack()<CR>
-
-
 "--------------------------------------------------------------------------------
 " git commands via fugitive
 "--------------------------------------------------------------------------------
