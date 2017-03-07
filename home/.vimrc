@@ -153,11 +153,12 @@ nmap <D-H> 0i<D-H><Esc>
 map <S-Enter> O<Esc>
 map <CR> o<Esc>
 
-" ^J / ^K - scroll file & keep cursor centered
-map <C-J> jzz
-map <C-K> kzz
-imap <C-J> <Esc>jzz
-imap <C-K> <Esc>kzz
+
+" alt-shift-{J,K} - scroll file & keep cursor centered
+map <D-J> jzz
+map <D-K> kzz
+imap <D-J> <Esc>jzz
+imap <D-K> <Esc>kzz
 
 " open new braces; jh style = indent the closing brace
 " overridden for .java files in autocmd section above
@@ -249,10 +250,10 @@ map <leader>gr :!cd %:p:h && GIT_PAGER='' git checkout -- %:t<CR><CR>:e! %<CR>
 
 " <leader>gb defined below (uses fugitive)
 
+
 "--------------------------------------------------------------------------------
 " plugins (managed with pathogen) and their bindings
 "--------------------------------------------------------------------------------
-
 
 " pathogen load
 call pathogen#runtime_append_all_bundles()
@@ -288,12 +289,18 @@ nnoremap <leader>ag :w<CR> :Gcd<CR> :Ag<space>
 
 
 "--------------------------------------------------------------------------------
-" git commands via fugitive
+" git commands via plugins
 "--------------------------------------------------------------------------------
 
 " 'blame' via fugitive
 map <leader>gb :Gblame<CR>
 
+" ctl-j / ctl-k: navigate to prev/next change lines (per gitgutter).  Using same mappings as in Araxis Merge
+map <C-J> <Plug>GitGutterNextHunk
+map <C-K> <Plug>GitGutterPrevHunk
+
+" make gitgutter snappier at updating the gutter.  Default is 4000.  Tune down if misbehaving
+set updatetime=250
 
 "--------------------------------------------------------------------------------
 " reference
