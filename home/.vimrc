@@ -106,6 +106,10 @@ au BufRead,BufNewFile *.java inoremap <buffer> {} {<CR>}<Esc>kA<CR>
 " use 2 spaces, not tabs, for indents.  apply to both java & xml.
 au BufRead,BufNewFile *.java setlocal expandtab
 au BufRead,BufNewFile *.xml  setlocal expandtab
+
+autocmd Filetype java set makeprg=myjavac
+set errorformat=%A%f:%l:\ %m,%-Z%p^,%-C%.%#
+
 "--------------------------------------------------------------------------------
 " end scalyr
 "--------------------------------------------------------------------------------
