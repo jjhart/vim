@@ -108,9 +108,9 @@ au BufRead,BufNewFile *.java setlocal smartindent
 " don't indent closing brace; note if smartident were not used we would need to add "<tab>" to the end of this macro
 au BufRead,BufNewFile *.java inoremap <buffer> {} {<CR>}<Esc>kA<CR>
 
-" java make: first, change to the project root
+" java make: first, change to the project root ...
 au QuickFixCmdPre make Gcd
-" then run ~/bin/myjavac, which simply cd's into ScalyrSite and runs 'jt' (as defined in ~/bashlib/java.bash) (and tweaks file paths to be relative to the cwd, which is the project root)
+" ... then run ~/bin/myjavac: (cd ScalyrSite && jt | sed-to-fix-file-paths)
 au Filetype java set makeprg=myjavac
 set errorformat=%A%f:%l:\ %m,%-Z%p^,%-C%.%#
 
