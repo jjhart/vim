@@ -94,20 +94,24 @@ let java_highlight_java_lang_ids=1 " highlight standard java identifiers
 
 
 "--------------------------------------------------------------------------------
-" scalyr coding style for java and xml
+" scalyr coding style for java (and xml, for pom.xml)
 " note adding "<buffer>" to inoremap applies mapping to current buffer only, cool, see :help map-local
 "--------------------------------------------------------------------------------
-" use smart indent options, rather than simple 'autoindent' (this is simple and de-indents closing braces for us, but doesn't go fully monty like cindent)
+
+" use spaces, not tabs, for indents.  apply to both java & xml (for pom.xml)
+au BufRead,BufNewFile *.xml  setlocal expandtab
+au BufRead,BufNewFile *.java setlocal expandtab
+
+" use smart indent options, rather than simple 'autoindent' (this is simple and de-indents closing braces for us, but doesn't go full monty like cindent)
 au BufRead,BufNewFile *.java setlocal smartindent
 
-" don't indent closing brace; not if smartident were not used we would need to add "<tab>" to the end of this macro
+" don't indent closing brace; note if smartident were not used we would need to add "<tab>" to the end of this macro
 au BufRead,BufNewFile *.java inoremap <buffer> {} {<CR>}<Esc>kA<CR>
 
-" use 2 spaces, not tabs, for indents.  apply to both java & xml.
-au BufRead,BufNewFile *.java setlocal expandtab
-au BufRead,BufNewFile *.xml  setlocal expandtab
-
-autocmd Filetype java set makeprg=myjavac
+" java make: first, change to the project root
+au QuickFixCmdPre make Gcd
+" then run ~/bin/myjavac, which simply cd's into ScalyrSite and runs 'jt' (as defined in ~/bashlib/java.bash) (and tweaks file paths to be relative to the cwd, which is the project root)
+au Filetype java set makeprg=myjavac
 set errorformat=%A%f:%l:\ %m,%-Z%p^,%-C%.%#
 
 "--------------------------------------------------------------------------------
