@@ -308,7 +308,7 @@ map <C-J> <Plug>GitGutterNextHunk
 map <C-K> <Plug>GitGutterPrevHunk
 
 " make gitgutter snappier at updating the gutter.  Default is 4000.  Tune down if misbehaving
-set updatetime=250
+set updatetime=500
 
 "--------------------------------------------------------------------------------
 " reference
