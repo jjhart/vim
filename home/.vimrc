@@ -279,11 +279,11 @@ endfunction
 " Tabular - align code into columns
 " mnemonic: 'a'lign
 " opens the command for you but doesn't close it - just type your delim and hit enter
-vmap <leader>a :Tabularize /
+map <leader>a :Tabularize /
 " flavors: ='>'
-vmap <leader>a> :Tabularize /=><cr>
+map <leader>a> :Tabularize /=><cr>
 " flavors: //
-vmap <leader>a/ :Tabularize /\/\/<cr>
+map <leader>a/ :Tabularize /\/\/<cr>
 
 
 " dash.vim - open dash for word under cursor
