@@ -87,6 +87,7 @@ au BufRead,BufNewFile *.aspx      set filetype=cs
 au BufRead,BufNewFile *.config    set filetype=xml
 au BufRead,BufNewFile *.config.in set filetype=xml
 au BufRead,BufNewFile *.resource  set filetype=javascript
+au BufRead,BufNewFile *.md        set wrap linebreak nolist display+=lastline
 
 " java.vim syntax coloring tweaks
 let java_ignore_javadoc=1          " don't highlight HTML in javadoc
@@ -98,15 +99,10 @@ let java_highlight_java_lang_ids=1 " highlight standard java identifiers
 " note adding "<buffer>" to inoremap applies mapping to current buffer only, cool, see :help map-local
 "--------------------------------------------------------------------------------
 
-" use spaces, not tabs, for indents.  apply to both java & xml (for pom.xml)
-au BufRead,BufNewFile *.xml  setlocal expandtab
-au BufRead,BufNewFile *.java setlocal expandtab
 
-" use smart indent options, rather than simple 'autoindent' (this is simple and de-indents closing braces for us, but doesn't go full monty like cindent)
-au BufRead,BufNewFile *.java setlocal smartindent
-
-" don't indent closing brace; note if smartident were not used we would need to add "<tab>" to the end of this macro
-au BufRead,BufNewFile *.java inoremap <buffer> {} {<CR>}<Esc>kA<CR>
+au BufRead,BufNewFile *.{java,dashboard,md,xml}  setlocal expandtab|                " use spaces, not tabs, for indents.  apply to both java & xml (for pom.xml)
+au BufRead,BufNewFile *.{java,dashboard,md}  setlocal smartindent|                  " use smart indent options, rather than simple 'autoindent' (this is simple and de-indents closing braces for us, but doesn't go full monty like cindent)
+au BufRead,BufNewFile *.{java,dashboard,md} inoremap <buffer> {} {<CR>}<Esc>kA<CR>| " do not indent closing brace; note if smartident were not used we would need to add ' <tab> ' to the end of this macro
 
 " java make: first, change to the project root ...
 au QuickFixCmdPre make Gcd
