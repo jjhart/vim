@@ -87,7 +87,8 @@ au BufRead,BufNewFile *.aspx      set filetype=cs
 au BufRead,BufNewFile *.config    set filetype=xml
 au BufRead,BufNewFile *.config.in set filetype=xml
 au BufRead,BufNewFile *.resource  set filetype=javascript
-au BufRead,BufNewFile *.md        set wrap linebreak nolist display+=lastline
+au BufRead,BufNewFile *.md        set filetype=markdown
+au BufRead,BufNewFile *.md        setlocal wrap linebreak nolist display+=lastline
 
 " java.vim syntax coloring tweaks
 let java_ignore_javadoc=1          " don't highlight HTML in javadoc
