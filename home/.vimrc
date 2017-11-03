@@ -234,6 +234,9 @@ set tags=~/projects/*/*/.tags,~/projects/*/thirdparty/*/.tags
 " regen/update tags file at root for current file's git repo
 command! RefreshTags Gcd | normal :!ctags -R -f ./.tags .<CR>
 
+" scalyr-specific version that only scans ScalyrSite/src
+command! ScalyrTags Gcd | normal :!ctags -R -f ./.tags ScalyrSite/src<CR>
+
 " open tag-under-cursor in new tab
 " http://stackoverflow.com/questions/539231/how-to-use-multiple-tabs-when-tagging-to-a-function-in-vim
 nmap <C-Enter> <C-w><C-]><C-w>T
