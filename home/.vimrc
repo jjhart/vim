@@ -57,13 +57,17 @@ endif
 " always show statusline
 set laststatus=2
 
-set statusline =
-" File description
-set statusline +=%f\ %h%m%r%w
+" File description, note this is = not +=
+set statusline =%f\ %h%m%r%w
+
 " Fully qualified name of the current function (needs tagbar.vim)
-set statusline +=\ {%{tagbar#currenttag('%s','','f')}}
+if has('gui_running')
+	set statusline +=\ {%{tagbar#currenttag('%s','','f')}}
+endif
+
 " Name of the current branch (needs fugitive.vim)
 set statusline +=\ %{fugitive#statusline()}
+
 " <current line> / <total lines> pct
 set statusline +=%=col\ %3c,\ line\ %3l/%4L\ %P\ 
 
