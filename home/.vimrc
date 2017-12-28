@@ -91,12 +91,13 @@ au BufRead,BufNewFile *.aspx      set filetype=cs
 au BufRead,BufNewFile *.config    set filetype=xml
 au BufRead,BufNewFile *.config.in set filetype=xml
 au BufRead,BufNewFile *.resource  set filetype=javascript
+au BufRead,BufNewFile *.dashboard set filetype=javascript
 au BufRead,BufNewFile *.md        set filetype=markdown
-au BufRead,BufNewFile *.md        setlocal wrap linebreak nolist display+=lastline
+au BufRead,BufNewFile *.md        setlocal wrap linebreak nolist display+=lastline formatoptions-=c
 
 
 "--------------------------------------------------------------------------------
-" java / scalyr coding style (and xml, for pom.xml)
+" scalyr coding style
 " note adding "<buffer>" to inoremap applies mapping to current buffer only, cool, see :help map-local
 "--------------------------------------------------------------------------------
 
@@ -104,10 +105,9 @@ au BufRead,BufNewFile *.md        setlocal wrap linebreak nolist display+=lastli
 let java_ignore_javadoc=1          " don't highlight HTML in javadoc
 let java_highlight_java_lang_ids=1 " highlight standard java identifiers
 
-
-au BufRead,BufNewFile *.{java,dashboard,md,xml}  setlocal expandtab|                     " use spaces, not tabs, for indents.  apply to both java & xml (for pom.xml)
-au BufRead,BufNewFile *.{java,dashboard,md}      setlocal smartindent|                   " use smart indent options, rather than simple 'autoindent' (this is simple and de-indents closing braces for us, but doesn't go full monty like cindent)
-au BufRead,BufNewFile *.{java,dashboard,md}      inoremap <buffer> {} {<CR>}<Esc>kA<CR>| " do not indent closing brace; note if smartident were not used we would need to add ' <tab> ' to the end of this macro
+au BufRead,BufNewFile */projects/scalyr/*,*/GoogleDrive/NOTES/*  setlocal expandtab|                     " use spaces, not tabs, for indents.  apply to both java & xml (for pom.xml)
+au BufRead,BufNewFile */projects/scalyr/*,*/GoogleDrive/NOTES/*  setlocal smartindent|                   " use smart indent options, rather than simple 'autoindent' (this is simple and de-indents closing braces for us, but doesn't go full monty like cindent)
+au BufRead,BufNewFile */projects/scalyr/*,*/GoogleDrive/NOTES/*  inoremap <buffer> {} {<CR>}<Esc>kA<CR>| " do not indent closing brace; note if smartident were not used we would need to add ' <tab> ' to the end of this macro
 
 " java make: first, change to the project root ...
 au QuickFixCmdPre make Gcd
