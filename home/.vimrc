@@ -116,9 +116,9 @@ au Filetype java set makeprg=myjavac
 set errorformat=%A%f:%l:\ %m,%-Z%p^,%-C%.%#
 
 " 'test-no': comment out all @Test annotations except the current (next above cursor) and return cursor to current location
-nmap <leader>tn ma:%s~\V @Test~ /*@Test*/~<CR>`a?@Test<CR>Bxxelxx`a:w<CR>
+nmap <leader>tn ma:%s~\V @Test~ /*@Test JH-NOCOMMIT*/~<CR>`a?@Test<CR>Bxxeldf/`a:w<CR>
 " 'test-yes': uncomment @Test annotations, return cursor
-nmap <leader>ty ma:%s~\V/*@Test*/~@Test~<CR>`a:w<CR>
+nmap <leader>ty ma:%s~\V/*@Test JH-NOCOMMIT*/~@Test~<CR>`a:w<CR>
 
 "--------------------------------------------------------------------------------
 " end java / scalyr
