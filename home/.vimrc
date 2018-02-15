@@ -51,6 +51,7 @@ if has('gui_running')
 else
 	set scrolloff=5
 	set norelativenumber " turn off line number column
+	set t_Co=256         " enable broader color palette
 endif
 
 "--------------------------------------------------------------------------------
