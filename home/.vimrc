@@ -44,11 +44,13 @@ set ruler
 
 set guifont=Monaco:h11
 colorscheme mine
+syntax on
 
 if has('gui_running') 
 	set scrolloff=10	" maintain 10 lines above/below cursoring downward
 else
 	set scrolloff=5
+	set norelativenumber " turn off line number column
 endif
 
 "--------------------------------------------------------------------------------
