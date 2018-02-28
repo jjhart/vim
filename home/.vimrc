@@ -63,6 +63,7 @@ set statusline =%f\ %h%m%r%w
 " Fully qualified name of the current function (needs tagbar.vim)
 if has('gui_running')
 	set statusline +=\ {%{tagbar#currenttag('%s','','f')}}
+	let g:tagbar_iconchars = ['▸', '▾']
 endif
 
 " Name of the current branch (needs fugitive.vim)
