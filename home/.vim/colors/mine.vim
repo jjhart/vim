@@ -16,7 +16,7 @@ let g:colors_name = "mine"
 
 hi Normal          ctermfg=LightGrey guifg=LightGrey guibg=black
 hi Visual          guifg=NONE        guibg=#1155BB     gui=NONE      ctermfg=NONE        ctermbg=darkgray    cterm=NONE
-hi CursorLine      guibg=#333333
+hi CursorLine      cterm=NONE ctermbg=234 guibg=#333333
 hi LineNr          guifg=#555555
 hi Comment         ctermfg=LightBlue guifg=SkyBlue  gui=NONE
 hi PerlPOD         ctermfg=LightBlue guifg=SkyBlue  gui=NONE
