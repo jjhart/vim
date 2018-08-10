@@ -42,16 +42,16 @@ set visualbell              " screen flash instead of sysbeep on various errors,
 set nowrap
 set ruler
 
-set guifont=Monaco:h11
+set guifont=Monaco:h10
 colorscheme mine
 syntax on
 
 if has('gui_running') 
-	set scrolloff=10	" maintain 10 lines above/below cursoring downward
+	set scrolloff=10     " maintain 10 lines above/below cursoring downward
 else
 	set scrolloff=5
 	set norelativenumber " turn off line number column
-	" set number           " turn on absolute line numbering
+	set number           " display absolute line numbers; useful for cut-and-paste
 	set t_Co=256         " enable broader color palette
 endif
 
@@ -62,16 +62,17 @@ endif
 set laststatus=2
 
 " File description, note this is = not +=
-set statusline =%f\ %h%m%r%w
+set statusline =%f\ %h%m%r%w 
 
-" Fully qualified name of the current function (needs tagbar.vim)
+" tagbar options & statusline tweaks therefrom
 set statusline +=\ {%{tagbar#currenttag('%s','','f')}}
 let g:tagbar_iconchars = ['▸', '▾']
 
+" macvim-vs-terminal vim differences; we use terminal vim for cutting-and-pasting into emails
+" so we customize with that goal in mind
 if has('gui_running')
-	" Name of the current branch (needs fugitive.vim)
-	set statusline +=\ %{fugitive#statusline()}
-	" <current line> / <total lines> pct
+	" current branch
+	set statusline +=\ :%{fugitive#head()}
 	set statusline +=%=col\ %3c,\ line\ %3l/%4L\ %P\ 
 endif
 
