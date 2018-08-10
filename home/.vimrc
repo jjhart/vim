@@ -51,6 +51,7 @@ if has('gui_running')
 else
 	set scrolloff=5
 	set norelativenumber " turn off line number column
+	" set number           " turn on absolute line numbering
 	set t_Co=256         " enable broader color palette
 endif
 
@@ -64,16 +65,16 @@ set laststatus=2
 set statusline =%f\ %h%m%r%w
 
 " Fully qualified name of the current function (needs tagbar.vim)
+set statusline +=\ {%{tagbar#currenttag('%s','','f')}}
+let g:tagbar_iconchars = ['▸', '▾']
+
 if has('gui_running')
-	set statusline +=\ {%{tagbar#currenttag('%s','','f')}}
-	let g:tagbar_iconchars = ['▸', '▾']
+	" Name of the current branch (needs fugitive.vim)
+	set statusline +=\ %{fugitive#statusline()}
+	" <current line> / <total lines> pct
+	set statusline +=%=col\ %3c,\ line\ %3l/%4L\ %P\ 
 endif
 
-" Name of the current branch (needs fugitive.vim)
-set statusline +=\ %{fugitive#statusline()}
-
-" <current line> / <total lines> pct
-set statusline +=%=col\ %3c,\ line\ %3l/%4L\ %P\ 
 
 
 "--------------------------------------------------------------------------------
@@ -112,6 +113,8 @@ let java_highlight_java_lang_ids=1 " highlight standard java identifiers
 au BufRead,BufNewFile */projects/scalyr/*,*/GoogleDrive/NOTES/*  setlocal expandtab|                     " use spaces, not tabs, for indents.  apply to both java & xml (for pom.xml)
 au BufRead,BufNewFile */projects/scalyr/*,*/GoogleDrive/NOTES/*  setlocal smartindent|                   " use smart indent options, rather than simple 'autoindent' (this is simple and de-indents closing braces for us, but doesn't go full monty like cindent)
 au BufRead,BufNewFile */projects/scalyr/*,*/GoogleDrive/NOTES/*  inoremap <buffer> {} {<CR>}<Esc>kA<CR>| " do not indent closing brace; note if smartident were not used we would need to add ' <tab> ' to the end of this macro
+
+au BufWritePre */projects/scalyr/*,*/GoogleDrive/NOTES/*  :%s/\v\s+$//e|                                 " remove trailing whitespace
 
 " java make: first, change to the project root ...
 au QuickFixCmdPre make Gcd
