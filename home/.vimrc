@@ -335,6 +335,24 @@ map <C-K> <Plug>GitGutterPrevHunk
 " make gitgutter snappier at updating the gutter.  Default is 4000.  Tune down if misbehaving
 set updatetime=500
 
+
+" modified from https://github.com/baroldgene/vim-github-links
+function! GithubLink()
+	" set pwd to repo root dir...
+	Gcd
+	" ... so bufname gives us a path from the top
+	let filename = bufname("%")
+  let linenumber = line(".")
+  let url = 'https://github.com/scalyr/scalyr/blob/master/' . filename . "#L" . linenumber
+  let output = system('pbcopy', url)
+  return url
+endfunction
+
+command! GithubLink call s:GithubLink()
+
+nnoremap <leader>gl :echo GithubLink()<cr>
+
+
 "--------------------------------------------------------------------------------
 " reference
 "--------------------------------------------------------------------------------
