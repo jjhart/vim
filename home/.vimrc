@@ -241,7 +241,7 @@ map <leader>wb :w! ~/b<CR>
 " ctags
 "--------------------------------------------------------------------------------
 
-set tags=~/projects/*/*/.tags,~/projects/*/thirdparty/*/.tags
+set tags=~/projects/*/*/.tags,~/projects/*/.tags,~/projects/*/thirdparty/*/.tags
 
 " regen/update tags file at root for current file's git repo
 command! RefreshTags Gcd | normal :!ctags -R -f ./.tags .<CR>
