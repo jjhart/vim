@@ -115,7 +115,9 @@ au BufRead,BufNewFile */projects/scalyr/*,*/GoogleDrive/NOTES/*  setlocal expand
 au BufRead,BufNewFile */projects/scalyr/*,*/GoogleDrive/NOTES/*  setlocal smartindent|                   " use smart indent options, rather than simple 'autoindent' (this is simple and de-indents closing braces for us, but doesn't go full monty like cindent)
 au BufRead,BufNewFile */projects/scalyr/*,*/GoogleDrive/NOTES/*  inoremap <buffer> {} {<CR>}<Esc>kA<CR>| " do not indent closing brace; note if smartident were not used we would need to add ' <tab> ' to the end of this macro
 
-au BufWritePre */projects/scalyr/*,*/GoogleDrive/NOTES/*  :%s/\v\s+$//e|                                 " remove trailing whitespace
+au BufRead,BufNewFile */projects/scalyr/my.scalyr.wiki/remote-files/* set filetype=javascript            " dashboards & datatables
+
+au BufWritePre        */projects/scalyr/*,*/GoogleDrive/NOTES/*  call s:strip_ws()|                      " remove trailing whitespace on save
 
 " java make: first, change to the project root ...
 au QuickFixCmdPre make Gcd
@@ -132,6 +134,13 @@ nmap <leader>ty ma:%s~\V/*@Test JH-NOCOMMIT*/~@Test~<CR>`a:w<CR>
 " end java / scalyr
 "--------------------------------------------------------------------------------
 
+" strip trailing ws & return cursor to current position; h/t jeberle
+fun! s:strip_ws()
+  let l = line('.')
+  let c = col('.')
+  keepp %s/\s\+$//e
+  call cursor(l, c)
+endf
 
 " specify our ISA directories for perl :make
 " au FileType Perl set makeprg=perl\ -c\ -I${IHANCE_LIB}\ -Muse_thirdparty_libs\ -I$src/sit/bin/lib\ \ %\ $*
@@ -325,6 +334,24 @@ map <C-K> <Plug>GitGutterPrevHunk
 
 " make gitgutter snappier at updating the gutter.  Default is 4000.  Tune down if misbehaving
 set updatetime=500
+
+
+" modified from https://github.com/baroldgene/vim-github-links
+function! GithubLink()
+	" set pwd to repo root dir...
+	Gcd
+	" ... so bufname gives us a path from the top
+	let filename = bufname("%")
+  let linenumber = line(".")
+  let url = 'https://github.com/scalyr/scalyr/blob/master/' . filename . "#L" . linenumber
+  let output = system('pbcopy', url)
+  return url
+endfunction
+
+command! GithubLink call s:GithubLink()
+
+nnoremap <leader>gl :echo GithubLink()<cr>
+
 
 "--------------------------------------------------------------------------------
 " reference
