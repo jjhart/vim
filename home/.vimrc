@@ -168,6 +168,9 @@ nmap <leader>F ?\(\%^\\|^\s*[#"/*<%]*\s*-----\)<CR>
 " fold current section using above shortcuts
 nmap <leader>z ,FmZ,fkzf`Z,fjjj
 
+" sort-numeric: use built-in `sort n`, which handles alphanumeric but only in reverse, then reverse the buffer
+nmap <leader>sn :%sort n<CR>:g/^/m0<CR>
+vmap <leader>sn :'<,'>sort n<CR>gv<CR>:'<,'>!tail -r<CR>
 
 " 'tagbar-toggle'
 nmap <leader>tb :TagbarToggle<CR>
