@@ -215,7 +215,7 @@ map <leader>pl :perldo
 map <leader>e :tabedit <C-R>=expand("%:p:h") . "/" <CR>
 
 " open the current file in Marked 2
-map <leader>md :!open -a /Applications/Marked\ 2.app %<CR><CR>
+map <leader>md :!open -a /Applications/Marked\ 2.app "%"<CR><CR>
 
 " set reflow wrapping to happen at 120
 set textwidth=120
