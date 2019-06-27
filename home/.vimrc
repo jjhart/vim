@@ -24,7 +24,7 @@ set showtabline=2           " always show tab line, even with only one open tab
 set noswapfile              " turn off swapfiles - don't want .swp files littering the joint!
 set shiftwidth=2            " set tabs to width 2
 set tabstop=2               " set tabs to width 2
-set noexpandtab             " insert tabs, not spaces, when autoindenting
+set expandtab               " insert spaces, not tabs, when autoindenting
 set autoindent              " use indent from previous line, and that's it (simple)
 set ignorecase              " ignore case when searching
 set smartcase               " ignore case if search pattern is all lowercase, case-sensitive otherwise
@@ -74,6 +74,9 @@ if has('gui_running')
 	" current branch
 	set statusline +=\ :%{fugitive#head()}
 	set statusline +=%=col\ %3c,\ line\ %3l/%4L\ %P\ 
+
+	" Start up the ghost text listening socket
+	GhostTextStart
 endif
 
 
@@ -111,7 +114,6 @@ au BufRead,BufNewFile *.md        setlocal wrap linebreak nolist display+=lastli
 let java_ignore_javadoc=1          " don't highlight HTML in javadoc
 let java_highlight_java_lang_ids=1 " highlight standard java identifiers
 
-au BufRead,BufNewFile */projects/scalyr/*,*/GoogleDrive/NOTES/*  setlocal expandtab|                     " use spaces, not tabs, for indents.  apply to both java & xml (for pom.xml)
 au BufRead,BufNewFile */projects/scalyr/*,*/GoogleDrive/NOTES/*  setlocal smartindent|                   " use smart indent options, rather than simple 'autoindent' (this is simple and de-indents closing braces for us, but doesn't go full monty like cindent)
 au BufRead,BufNewFile */projects/scalyr/*,*/GoogleDrive/NOTES/*  inoremap <buffer> {} {<CR>}<Esc>kA<CR>| " do not indent closing brace; note if smartident were not used we would need to add ' <tab> ' to the end of this macro
 
