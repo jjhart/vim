@@ -341,6 +341,9 @@ nnoremap <leader>ag :w<CR> :Gcd<CR> :Ag<space>
 " 'blame' via fugitive
 map <leader>gb :Gblame<CR>
 
+" undo (revent) current hunk, via gitgutter
+map <leader>gu :GitGutterUndoHunk<CR>
+
 " ctl-j / ctl-k: navigate to prev/next change lines (per gitgutter).  Using same mappings as in Araxis Merge
 map <C-J> <Plug>GitGutterNextHunk
 map <C-K> <Plug>GitGutterPrevHunk
