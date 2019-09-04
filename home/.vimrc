@@ -82,9 +82,6 @@ if has('gui_running')
 	" current branch
 	set statusline +=\ :%{fugitive#head()}
 	set statusline +=%=col\ %3c,\ line\ %3l/%4L\ %P\ 
-
-	" Start up the ghost text listening socket
-	GhostTextStart
 endif
 
 
