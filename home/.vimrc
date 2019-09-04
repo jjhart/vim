@@ -55,6 +55,14 @@ else
 	set t_Co=256         " enable broader color palette
 endif
 
+" outdoors: white background
+function! GoOutside()
+	colorscheme shine
+	set norelativenumber
+endfunction
+
+command! GoOutside call GoOutside()
+
 "--------------------------------------------------------------------------------
 " statusline
 "--------------------------------------------------------------------------------
