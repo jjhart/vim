@@ -119,8 +119,10 @@ au BufRead,BufNewFile *.md        setlocal wrap linebreak nolist display+=lastli
 let java_ignore_javadoc=1          " don't highlight HTML in javadoc
 let java_highlight_java_lang_ids=1 " highlight standard java identifiers
 
-set smartindent|                   " use smart indent options, rather than simple 'autoindent' (this is simple and de-indents closing braces for us, but doesn't go full monty like cindent)
-inoremap <buffer> {} {<CR>}<Esc>kA<CR>| " do not indent closing brace; note if smartident were not used we would need to add ' <tab> ' to the end of this macro
+set smartindent               " use smart indent options, rather than simple 'autoindent' (this is simple and de-indents closing braces for us, but doesn't go full monty like cindent)
+
+" do not indent closing brace; note if smartident were not used we would need to add ' <tab> ' to the end of this macro
+inoremap {} {<CR>}<Esc>kA<CR>
 
 " au BufRead,BufNewFile */projects/scalyr/*,*/GoogleDrive/NOTES/*  setlocal smartindent|                   " use smart indent options, rather than simple 'autoindent' (this is simple and de-indents closing braces for us, but doesn't go full monty like cindent)
 " au BufRead,BufNewFile */projects/scalyr/*,*/GoogleDrive/NOTES/*  inoremap <buffer> {} {<CR>}<Esc>kA<CR>| " do not indent closing brace; note if smartident were not used we would need to add ' <tab> ' to the end of this macro
@@ -199,11 +201,6 @@ map <D-J> jzz
 map <D-K> kzz
 imap <D-J> <Esc>jzz
 imap <D-K> <Esc>kzz
-
-" open new braces; jh style = indent the closing brace
-" overridden for .java files in autocmd section above
-inoremap {} {<CR><tab>}<Esc>hO
-
 
 " paste while in insert mode
 inoremap <C-P> <ESC>pa
