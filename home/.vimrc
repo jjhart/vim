@@ -106,6 +106,7 @@ au BufRead,BufNewFile *.config    set filetype=xml
 au BufRead,BufNewFile *.config.in set filetype=xml
 au BufRead,BufNewFile *.resource  set filetype=javascript
 au BufRead,BufNewFile *.dashboard set filetype=javascript
+au BufRead,BufNewFile *.gs        set filetype=javascript
 au BufRead,BufNewFile *.md        set filetype=markdown
 au BufRead,BufNewFile *.md        setlocal wrap linebreak nolist display+=lastline formatoptions-=c
 
