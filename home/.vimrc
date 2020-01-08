@@ -47,18 +47,18 @@ colorscheme mine
 syntax on
 
 if has('gui_running') 
-	set scrolloff=10     " maintain 10 lines above/below cursoring downward
+  set scrolloff=10     " maintain 10 lines above/below cursoring downward
 else
-	set scrolloff=5
-	set norelativenumber " turn off line number column
-	set number           " display absolute line numbers; useful for cut-and-paste
-	set t_Co=256         " enable broader color palette
+  set scrolloff=5
+  set norelativenumber " turn off line number column
+  set number           " display absolute line numbers; useful for cut-and-paste
+  set t_Co=256         " enable broader color palette
 endif
 
 " outdoors: white background
 function! GoOutside()
-	colorscheme shine
-	set norelativenumber
+  colorscheme shine
+  set norelativenumber
 endfunction
 
 command! GoOutside call GoOutside()
@@ -79,9 +79,9 @@ let g:tagbar_iconchars = ['▸', '▾']
 " macvim-vs-terminal vim differences; we use terminal vim for cutting-and-pasting into emails
 " so we customize with that goal in mind
 if has('gui_running')
-	" current branch
-	set statusline +=\ :%{fugitive#head()}
-	set statusline +=%=col\ %3c,\ line\ %3l/%4L\ %P\ 
+  " current branch
+  set statusline +=\ :%{fugitive#head()}
+  set statusline +=%=col\ %3c,\ line\ %3l/%4L\ %P\ 
 endif
 
 
@@ -308,7 +308,7 @@ let g:yankring_history_dir = '$HOME/.vim'
 
 " equivalent to 'nnoremap Y y$', but with yankring; this *had* been before pathogen but that doesn't make sense to me
 function! YRRunAfterMaps()
-		nnoremap Y   :<C-U>YRYankCount 'y$'<CR>
+    nnoremap Y   :<C-U>YRYankCount 'y$'<CR>
 endfunction
 
 
@@ -352,10 +352,10 @@ set updatetime=500
 
 " modified from https://github.com/baroldgene/vim-github-links
 function! GithubLink()
-	" set pwd to repo root dir...
-	Gcd
-	" ... so bufname gives us a path from the top
-	let filename = bufname("%")
+  " set pwd to repo root dir...
+  Gcd
+  " ... so bufname gives us a path from the top
+  let filename = bufname("%")
   let linenumber = line(".")
   let url = 'https://github.com/scalyr/scalyr/blob/master/' . filename . "#L" . linenumber
   let output = system('pbcopy', url)
