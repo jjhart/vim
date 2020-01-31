@@ -124,12 +124,12 @@ set smartindent               " use smart indent options, rather than simple 'au
 " do not indent closing brace; note if smartident were not used we would need to add ' <tab> ' to the end of this macro
 inoremap {} {<CR>}<Esc>kA<CR>
 
-" au BufRead,BufNewFile */projects/scalyr/*,*/GoogleDrive/NOTES/*  setlocal smartindent|                   " use smart indent options, rather than simple 'autoindent' (this is simple and de-indents closing braces for us, but doesn't go full monty like cindent)
-" au BufRead,BufNewFile */projects/scalyr/*,*/GoogleDrive/NOTES/*  inoremap <buffer> {} {<CR>}<Esc>kA<CR>| " do not indent closing brace; note if smartident were not used we would need to add ' <tab> ' to the end of this macro
+" au BufRead,BufNewFile */src/scalyr/*,*/GoogleDrive/NOTES/*  setlocal smartindent|                   " use smart indent options, rather than simple 'autoindent' (this is simple and de-indents closing braces for us, but doesn't go full monty like cindent)
+" au BufRead,BufNewFile */src/scalyr/*,*/GoogleDrive/NOTES/*  inoremap <buffer> {} {<CR>}<Esc>kA<CR>| " do not indent closing brace; note if smartident were not used we would need to add ' <tab> ' to the end of this macro
 
-au BufRead,BufNewFile */projects/scalyr/my.scalyr.wiki/remote-files/* set filetype=javascript            " dashboards & datatables
+au BufRead,BufNewFile */src/scalyr/my.scalyr.wiki/remote-files/* set filetype=javascript            " dashboards & datatables
 
-au BufWritePre        */projects/scalyr/*,*/GoogleDrive/NOTES/*  call s:strip_ws()|                      " remove trailing whitespace on save
+au BufWritePre        */src/scalyr/*,*/GoogleDrive/NOTES/*  call s:strip_ws()|                      " remove trailing whitespace on save
 
 " java make: first, change to the project root ...
 au QuickFixCmdPre make Gcd
@@ -260,7 +260,7 @@ map <leader>wb :w! ~/b<CR>
 " ctags
 "--------------------------------------------------------------------------------
 
-set tags=~/projects/*/*/.tags,~/projects/*/.tags,~/projects/*/thirdparty/*/.tags
+set tags=~/src/*/*/.tags,~/src/*/.tags,~/src/*/thirdparty/*/.tags
 
 " regen/update tags file at root for current file's git repo
 command! RefreshTags Gcd | normal :!ctags -R -f ./.tags .<CR>
