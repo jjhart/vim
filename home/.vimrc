@@ -125,9 +125,6 @@ set smartindent               " use smart indent options, rather than simple 'au
 " do not indent closing brace; note if smartident were not used we would need to add ' <tab> ' to the end of this macro
 inoremap {} {<CR>}<Esc>kA<CR>
 
-" au BufRead,BufNewFile */src/scalyr/*,*/GoogleDrive/NOTES/*  setlocal smartindent|                   " use smart indent options, rather than simple 'autoindent' (this is simple and de-indents closing braces for us, but doesn't go full monty like cindent)
-" au BufRead,BufNewFile */src/scalyr/*,*/GoogleDrive/NOTES/*  inoremap <buffer> {} {<CR>}<Esc>kA<CR>| " do not indent closing brace; note if smartident were not used we would need to add ' <tab> ' to the end of this macro
-
 au BufRead,BufNewFile */src/scalyr/my.scalyr.wiki/remote-files/* set filetype=javascript            " dashboards & datatables
 
 au BufWritePre        */src/scalyr/*,*/GoogleDrive/NOTES/*  call s:strip_ws()|                      " remove trailing whitespace on save
