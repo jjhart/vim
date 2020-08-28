@@ -17,6 +17,11 @@ nmap <silent> <leader>vl :so $MYVIMRC<CR>
 nnoremap ; :
 vnoremap ; :
 
+" paste from the 0 register (not the unnamed), to allow for repeatedly pasting the same text over other text
+" particularly important when replacing N lines with some new variant
+" note that `y` populates the 0 register by default, so we only need to remap p
+vnoremap p "0p
+
 "--------------------------------------------------------------------------------
 " options
 "--------------------------------------------------------------------------------
