@@ -132,6 +132,10 @@ inoremap {} {<CR>}<Esc>kA<CR>
 
 au BufRead,BufNewFile */src/scalyr/my.scalyr.wiki/remote-files/* set filetype=javascript            " dashboards & datatables
 
+" mark FC2 files obviously, for A/B coding
+au BufEnter,BufRead,BufNewFile */src/scalyr/FC2/* colorscheme desert
+au BufLeave                    */src/scalyr/FC2/* colorscheme mine 
+
 au BufWritePre        */src/scalyr/*,*/GoogleDrive/NOTES/*  call s:strip_ws()|                      " remove trailing whitespace on save
 
 " java make: first, change to the project root ...
