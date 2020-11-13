@@ -188,6 +188,7 @@ nmap <leader>sn :%sort n<CR>:g/^/m0<CR>
 vmap <leader>sn :'<,'>sort n<CR>gv<CR>:'<,'>!tail -r<CR>
 
 " 'tagbar-toggle'
+let g:tagbar_width = 80
 nmap <leader>tb :TagbarToggle<CR>
 
 " horizontal rule
