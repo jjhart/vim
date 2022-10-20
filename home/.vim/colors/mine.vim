@@ -58,7 +58,7 @@ hi MyDiffNormal    ctermbg=White ctermfg=black  guibg=White guifg=black  gui=NON
 hi MoreMsg          gui=NONE
 hi ModeMsg          gui=NONE
 hi Title            gui=NONE
-hi NonText          gui=NONE
+"hi NonText          gui=NONE
 hi DiffDelete       gui=NONE
 hi DiffText         gui=NONE
 hi StatusLine       guifg=black guibg=gray gui=NONE

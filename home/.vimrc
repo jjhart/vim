@@ -149,6 +149,12 @@ nmap <leader>tn ma:%s~\V @Test~ /*@Test JH-NOCOMMIT*/~<CR>`a?@Test<CR>Bxxeldf/`a
 " 'test-yes': uncomment @Test annotations, return cursor
 nmap <leader>ty ma:%s~\V/*@Test JH-NOCOMMIT*/~@Test~<CR>`a:w<CR>
 
+
+" 'you-track' - turn a youtrack URL into its standup-ready form
+" input: https://scalyr.myjetbrains.com/youtrack/issue/BACK-3087/GIS-timeout-errors-probably-hiding-concurrency-gate-timeout-errors
+" ouput: BACK-3087 GIS timeout errors probably hiding concurrency gate timeout errors
+nmap <leader>yt 0dtBwwwi<CR>jj;s/-/ /g<CR>xkJI* <ESC>
+
 "--------------------------------------------------------------------------------
 " end java / scalyr
 "--------------------------------------------------------------------------------
@@ -220,9 +226,6 @@ map <C-S> :w<CR>
 " jj = exit insert mode
 inoremap jj <ESC>
 
-" use control-space to insert an underscore; slightly easier than typing it...
-imap <C-space> _
-
 " perldo!
 map <leader>pl :perldo
 
@@ -233,9 +236,9 @@ map <leader>e :tabedit <C-R>=expand("%:p:h") . "/" <CR>
 map <leader>md :!open -a /Applications/Marked\ 2.app "%"<CR><CR>
 
 " set reflow wrapping to happen at 120
-set textwidth=120
+" set textwidth=120
 " .. but make sure it doesn't happen automatically
-set formatoptions-=t
+" set formatoptions-=t
 
 " reflow a para with ,q:
 nnoremap <leader>q gqap
@@ -249,13 +252,13 @@ map <leader>rl :e! %<CR>
 "--------------------------------------------------------------------------------
 " ,w commands: split screen & misc.
 "--------------------------------------------------------------------------------
-" ,wo opens vertical split
+" ,wo opens vertical split, and shrink left pane by 60 to center new pane
 " ,wk keeps current split, closes others
 " ,wc closes current split window
 " <C-hd> & <C-l> move cursor back & forth
 " ,wh open help in a vertical split
 " ,wa writes current buffer to ~/a
-nnoremap <leader>wo <C-W>v
+nnoremap <leader>wo <C-W>v60<C-W><
 nnoremap <C-H> <C-W>h
 nnoremap <C-L> <C-W>l
 nnoremap <leader>wk <C-W>o
