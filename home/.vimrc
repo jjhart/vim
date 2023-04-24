@@ -25,25 +25,27 @@ vnoremap p "0p
 "--------------------------------------------------------------------------------
 " options
 "--------------------------------------------------------------------------------
-set showtabline=2           " always show tab line, even with only one open tab
-set noswapfile              " turn off swapfiles - don't want .swp files littering the joint!
-set shiftwidth=2            " set tabs to width 2
-set tabstop=2               " set tabs to width 2
-set expandtab               " insert spaces, not tabs, when autoindenting
-set autoindent              " use indent from previous line, and that's it (simple)
-set ignorecase              " ignore case when searching
-set smartcase               " ignore case if search pattern is all lowercase, case-sensitive otherwise
-set incsearch               " show search matches as you type
-set nohlsearch              " don't highlight incsearch matches
-set guioptions-=T           " turn off the never-used toolbar buttons
-set clipboard=unnamed       " use the OS X clipboard for copy/paste (if no register is specified).  Thus, yy in vim will write to the system clipboard & can be pasted with Cmd-C
-set wildmode=list:longest   " make tab-completion behave like bash shell
-set autochdir               " always set vim's pwd to current file dir
-set synmaxcol=250           " only syntax highlight the first 250 columns; makes a big speed difference for wide files
-set shell=bash\ --login     " source .bash_login etc when executing shellouts; note aliases don't work regardless =(
-set cursorline              " enable cursorline coloring
-set relativenumber          " show line number column w/ relative line numbers
-set visualbell              " screen flash instead of sysbeep on various errors, like ESC-when-already-in-normal-mode
+set showtabline=2            " always show tab line, even with only one open tab
+set noswapfile               " turn off swapfiles - don't want .swp files littering the joint!
+set shiftwidth=2             " set tabs to width 2
+set tabstop=2                " set tabs to width 2
+set expandtab                " insert spaces, not tabs, when autoindenting
+set autoindent               " use indent from previous line, and that's it (simple)
+set ignorecase               " ignore case when searching
+set smartcase                " ignore case if search pattern is all lowercase, case-sensitive otherwise
+set incsearch                " show search matches as you type
+set nohlsearch               " don't highlight incsearch matches
+set guioptions-=T            " turn off the never-used toolbar buttons
+set clipboard=unnamed        " use the OS X clipboard for copy/paste (if no register is specified).  Thus, yy in vim will write to the system clipboard & can be pasted with Cmd-C
+set wildmode=list:longest    " make tab-completion behave like bash shell
+set autochdir                " always set vim's pwd to current file dir
+set synmaxcol=250            " only syntax highlight the first 250 columns; makes a big speed difference for wide files
+set shell=bash\ --login      " source .bash_login etc when executing shellouts; note aliases don't work regardless =(
+set cursorline               " enable cursorline coloring
+set relativenumber           " show line number column w/ relative line numbers
+set visualbell               " screen flash instead of sysbeep on various errors, like ESC-when-already-in-normal-mode
+set laststatus=2             " always show statusline
+set statusline =%f\ %h%m%r%w " File description, note this is = not +=
 set nowrap
 set ruler
 
@@ -51,7 +53,7 @@ set guifont=Monaco:h10
 colorscheme mine
 syntax on
 
-if has('gui_running') 
+if has('gui_running') " detect a gui environment (macvim, vimr, etc)
   set scrolloff=10     " maintain 10 lines above/below cursoring downward
 else
   set scrolloff=5
@@ -59,37 +61,6 @@ else
   set number           " display absolute line numbers; useful for cut-and-paste
   set t_Co=256         " enable broader color palette
 endif
-
-" outdoors: white background
-function! GoOutside()
-  colorscheme shine
-  set norelativenumber
-endfunction
-
-command! GoOutside call GoOutside()
-
-"--------------------------------------------------------------------------------
-" statusline
-"--------------------------------------------------------------------------------
-" always show statusline
-set laststatus=2
-
-" File description, note this is = not +=
-set statusline =%f\ %h%m%r%w 
-
-" tagbar options & statusline tweaks therefrom
-set statusline +=\ {%{tagbar#currenttag('%s','','f')}}
-let g:tagbar_iconchars = ['▸', '▾']
-
-" macvim-vs-terminal vim differences; we use terminal vim for cutting-and-pasting into emails
-" so we customize with that goal in mind
-if has('gui_running')
-  " current branch
-  set statusline +=\ :%{fugitive#head()}
-  set statusline +=%=col\ %3c,\ line\ %3l/%4L\ %P\ 
-endif
-
-
 
 "--------------------------------------------------------------------------------
 " filetypes, autocommands
@@ -114,12 +85,22 @@ au BufRead,BufNewFile *.dashboard set filetype=javascript
 au BufRead,BufNewFile *.gs        set filetype=javascript
 au BufRead,BufNewFile *.md        set filetype=markdown
 au BufRead,BufNewFile *.md        setlocal wrap linebreak nolist display+=lastline formatoptions-=c
+au BufRead,BufNewFile bash-fc-*   set filetype=sh    " bash 'fc' command uses $EDITOR to edit last command.  These files are named "bash-fc-..."; set their type accordingly
+
+
 
 
 "--------------------------------------------------------------------------------
-" scalyr coding style
-" note adding "<buffer>" to inoremap applies mapping to current buffer only, cool, see :help map-local
+" scalyr/java coding style
+" FYI (not in use) adding "<buffer>" to inoremap applies mapping to current buffer only, cool, see :help map-local
 "--------------------------------------------------------------------------------
+
+au BufRead,BufNewFile */src/scalyr/my.scalyr.wiki/remote-files/* set filetype=javascript            " dashboards & datatables
+
+" mark FC2 files obviously, for A/B coding
+au BufEnter,BufRead,BufNewFile */src/scalyr/FC2/* colorscheme desert
+au BufLeave                    */src/scalyr/FC2/* colorscheme mine 
+
 
 " java.vim syntax coloring tweaks
 let java_ignore_javadoc=1          " don't highlight HTML in javadoc
@@ -130,30 +111,12 @@ set smartindent               " use smart indent options, rather than simple 'au
 " do not indent closing brace; note if smartident were not used we would need to add ' <tab> ' to the end of this macro
 inoremap {} {<CR>}<Esc>kA<CR>
 
-au BufRead,BufNewFile */src/scalyr/my.scalyr.wiki/remote-files/* set filetype=javascript            " dashboards & datatables
-
-" mark FC2 files obviously, for A/B coding
-au BufEnter,BufRead,BufNewFile */src/scalyr/FC2/* colorscheme desert
-au BufLeave                    */src/scalyr/FC2/* colorscheme mine 
-
-au BufWritePre        */src/scalyr/*,*/GoogleDrive/NOTES/*  call s:strip_ws()|                      " remove trailing whitespace on save
-
-" java make: first, change to the project root ...
-au QuickFixCmdPre make Gcd
-" ... then run ~/bin/myjavac: (cd ScalyrSite && jt | sed-to-fix-file-paths)
-au Filetype java set makeprg=myjavac
-set errorformat=%A%f:%l:\ %m,%-Z%p^,%-C%.%#
+au BufWritePre        */src/scalyr/*,*/GoogleDrive/NOTES/*  call s:strip_ws()|                      " remove trailing whitespace on save; strip_ws defined below
 
 " 'test-no': comment out all @Test annotations except the current (next above cursor) and return cursor to current location
-nmap <leader>tn ma:%s~\V @Test~ /*@Test JH-NOCOMMIT*/~<CR>`a?@Test<CR>Bxxeldf/`a:w<CR>
+nmap <leader>tn ma:%s~\v (\@\w*Test)~ /*\1 JH-NOCOMMIT*/~<CR>`a?@.*Test<CR>Bxxeldf/`a:w<CR>
 " 'test-yes': uncomment @Test annotations, return cursor
-nmap <leader>ty ma:%s~\V/*@Test JH-NOCOMMIT*/~@Test~<CR>`a:w<CR>
-
-
-" 'you-track' - turn a youtrack URL into its standup-ready form
-" input: https://scalyr.myjetbrains.com/youtrack/issue/BACK-3087/GIS-timeout-errors-probably-hiding-concurrency-gate-timeout-errors
-" ouput: BACK-3087 GIS timeout errors probably hiding concurrency gate timeout errors
-nmap <leader>yt 0dtBwwwi<CR>jj;s/-/ /g<CR>xkJI* <ESC>
+nmap <leader>ty ma:%s~\v/\*(.*) JH-NOCOMMIT\*/~\1~<CR>`a:w<CR>
 
 "--------------------------------------------------------------------------------
 " end java / scalyr
@@ -166,14 +129,6 @@ fun! s:strip_ws()
   keepp %s/\s\+$//e
   call cursor(l, c)
 endf
-
-" specify our ISA directories for perl :make
-" au FileType Perl set makeprg=perl\ -c\ -I${IHANCE_LIB}\ -Muse_thirdparty_libs\ -I$src/sit/bin/lib\ \ %\ $*
-au FileType Perl set makeprg=perl\ \ %\ $*
-au FileType Perl set errorformat+=%m\ at\ %f\ line\ %l\.
-
-" bash "fc" command uses $EDITOR to edit last command.  These files are named "bash-fc-..."; set their type accordingly
-au BufRead,BufNewFile bash-fc-* set filetype=sh
 
 "--------------------------------------------------------------------------------
 " key mappings for standard (non-plugin) functionality
@@ -258,7 +213,7 @@ map <leader>rl :e! %<CR>
 " <C-hd> & <C-l> move cursor back & forth
 " ,wh open help in a vertical split
 " ,wa writes current buffer to ~/a
-nnoremap <leader>wo <C-W>v60<C-W><
+nnoremap <leader>wo <C-W>v10<C-W><
 nnoremap <C-H> <C-W>h
 nnoremap <C-L> <C-W>l
 nnoremap <leader>wk <C-W>o
@@ -267,28 +222,9 @@ map <leader>wh :vert help
 map <leader>wa :w! ~/a<CR>
 map <leader>wb :w! ~/b<CR>
 
-"--------------------------------------------------------------------------------
-" ctags
-"--------------------------------------------------------------------------------
-
-set tags=~/src/*/*/.tags,~/src/*/.tags,~/src/*/thirdparty/*/.tags
-
-" regen/update tags file at root for current file's git repo
-command! RefreshTags Gcd | normal :!ctags -R -f ./.tags .<CR>
-
-" scalyr-specific version that only scans ScalyrSite/src
-command! ScalyrTags Gcd | normal :!ctags -R -f ./.tags ScalyrSite/{src,test}<CR>
-
-" open tag-under-cursor in new tab
-" http://stackoverflow.com/questions/539231/how-to-use-multiple-tabs-when-tagging-to-a-function-in-vim
-nmap <C-Enter> <C-w><C-]><C-w>T
-nmap <C-S-Enter> <C-w><C-}>
-
-
-
 
 "--------------------------------------------------------------------------------
-" git commands
+" git commands that don't require a plugin
 "--------------------------------------------------------------------------------
 
 " note overriding GIT_PAGER is necessary to skip the 'WARNING: terminal is not fully functional'
@@ -302,11 +238,17 @@ map <leader>gd :!cd %:p:h && GIT_PAGER='' git di HEAD -- %:t<CR><CR>
 " 'revert' current file back to HEAD, then reload the file to skip the "file has changed" dialog
 map <leader>gr :!cd %:p:h && GIT_PAGER='' git checkout -- %:t<CR><CR>:e! %<CR>
 
-" <leader>gb defined below (uses fugitive)
+" other fugitive-based git commands defined below (eg, <leader>gb)
+
 
 
 "--------------------------------------------------------------------------------
-" plugins (managed with pathogen) and their bindings
+" PLUGINS
+"--------------------------------------------------------------------------------
+
+
+"--------------------------------------------------------------------------------
+" load plugins
 "--------------------------------------------------------------------------------
 
 " pathogen load
@@ -322,29 +264,27 @@ function! YRRunAfterMaps()
 endfunction
 
 
-" Tabular - align code into columns
-" mnemonic: 'a'lign
-" opens the command for you but doesn't close it - just type your delim and hit enter
-map <leader>a :Tabularize /
-" flavors: ='>'
-map <leader>a> :Tabularize /=><cr>
-" flavors: //
-map <leader>a/ :Tabularize /\/\/<cr>
 
+"--------------------------------------------------------------------------------
+" plugin: matsushita/tagbar
+"--------------------------------------------------------------------------------
 
-" dash.vim - open dash for word under cursor
-map <leader>d :Dash<cr>
-
-
-" quick access to Ag! - write the current file first b/c otherwise Ack throws an error
-" also invoke Gcd (fugitive) to set pwd to root of current GIT repo
-let g:agprg = 'ag --nogroup --nocolor --column --smart-case'
-nnoremap <leader>ag :w<CR> :Gcd<CR> :Ag<space>
+" tagbar options & statusline tweaks therefrom
+set statusline +=\ {%{tagbar#currenttag('%s','','f')}}
+let g:tagbar_iconchars = ['▸', '▾']
 
 
 "--------------------------------------------------------------------------------
-" git commands via plugins
+" plugin: fugitive
 "--------------------------------------------------------------------------------
+
+" macvim-vs-terminal vim differences; we use terminal vim for cutting-and-pasting into emails
+" so we customize with that goal in mind
+if has('gui_running')
+  " current branch
+  set statusline +=\ :%{fugitive#head()}
+  set statusline +=%=col\ %3c,\ line\ %3l/%4L\ %P\ 
+endif
 
 " 'blame' via fugitive
 map <leader>gb :Gblame<CR>
@@ -376,6 +316,49 @@ command! GithubLink call s:GithubLink()
 
 nnoremap <leader>gl :echo GithubLink()<cr>
 
+
+"--------------------------------------------------------------------------------
+" ctags - not a plugin, but depends on fugitive
+"--------------------------------------------------------------------------------
+
+set tags=~/src/*/*/.tags,~/src/*/.tags,~/src/*/thirdparty/*/.tags
+
+command! RefreshTags Gcd | normal :!ctags -R -f ./.tags .<CR>                    " regen/update tags file at root for current file's git repo
+command! ScalyrTags Gcd | normal :!ctags -R -f ./.tags ScalyrSite/{src,test}<CR> " scalyr-specific version that only scans ScalyrSite/src
+
+" open tag-under-cursor in new tab, h/ http://stackoverflow.com/questions/539231/how-to-use-multiple-tabs-when-tagging-to-a-function-in-vim
+nmap <C-Enter> <C-w><C-]><C-w>T
+
+" quick access to Ag! - write the current file first b/c otherwise Ack throws an error
+" also invoke Gcd (fugitive) to set pwd to root of current GIT repo
+" let g:agprg = 'ag --nogroup --nocolor --column --smart-case'
+" nnoremap <leader>ag :w<CR> :Gcd<CR> :Ag<space>
+
+
+
+
+
+
+"--------------------------------------------------------------------------------
+" plugin: tabular
+"--------------------------------------------------------------------------------
+
+" Tabular - align code into columns
+" mnemonic: 'a'lign
+" opens the command for you but doesn't close it - just type your delim and hit enter
+map <leader>a :Tabularize /
+" flavors: ='>'
+map <leader>a> :Tabularize /=><cr>
+" flavors: //
+map <leader>a/ :Tabularize /\/\/<cr>
+
+
+"--------------------------------------------------------------------------------
+" plugin: dash
+"--------------------------------------------------------------------------------
+
+" dash.vim - open dash for word under cursor
+map <leader>d :Dash<cr>
 
 "--------------------------------------------------------------------------------
 " reference
