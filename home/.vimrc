@@ -134,6 +134,7 @@ endf
 " key mappings for standard (non-plugin) functionality
 "--------------------------------------------------------------------------------
 
+
 " fold the current code section (as delimited by "#---" or "//---"
 " it works by moving upward to the previous --- line (or start-of-file),
 " setting a mark (Z), then moving down to the next --- line (or end-of-file),
@@ -255,6 +256,10 @@ map <leader>gr :!cd %:p:h && GIT_PAGER='' git checkout -- %:t<CR><CR>:e! %<CR>
 call pathogen#runtime_append_all_bundles()
 " call pathogen#helptags() " commenting out for speed; use 'plugins.bash -doc' to gen help docs
 
+
+"--------------------------------------------------------------------------------
+" plugin: yankring
+"--------------------------------------------------------------------------------
 " put yankring history file into .vim dir, instead of straight in $HOME
 let g:yankring_history_dir = '$HOME/.vim'
 
@@ -273,7 +278,6 @@ endfunction
 set statusline +=\ {%{tagbar#currenttag('%s','','f')}}
 let g:tagbar_iconchars = ['▸', '▾']
 
-
 "--------------------------------------------------------------------------------
 " plugin: fugitive
 "--------------------------------------------------------------------------------
@@ -288,16 +292,6 @@ endif
 
 " 'blame' via fugitive
 map <leader>gb :Gblame<CR>
-
-" undo (revent) current hunk, via gitgutter
-map <leader>gu :GitGutterUndoHunk<CR>
-
-" ctl-j / ctl-k: navigate to prev/next change lines (per gitgutter).  Using same mappings as in Araxis Merge
-map <C-J> <Plug>GitGutterNextHunk
-map <C-K> <Plug>GitGutterPrevHunk
-
-" make gitgutter snappier at updating the gutter.  Default is 4000.  Tune down if misbehaving
-set updatetime=500
 
 
 " modified from https://github.com/baroldgene/vim-github-links
@@ -329,15 +323,6 @@ command! ScalyrTags Gcd | normal :!ctags -R -f ./.tags ScalyrSite/{src,test}<CR>
 " open tag-under-cursor in new tab, h/ http://stackoverflow.com/questions/539231/how-to-use-multiple-tabs-when-tagging-to-a-function-in-vim
 nmap <C-Enter> <C-w><C-]><C-w>T
 
-" quick access to Ag! - write the current file first b/c otherwise Ack throws an error
-" also invoke Gcd (fugitive) to set pwd to root of current GIT repo
-" let g:agprg = 'ag --nogroup --nocolor --column --smart-case'
-" nnoremap <leader>ag :w<CR> :Gcd<CR> :Ag<space>
-
-
-
-
-
 
 "--------------------------------------------------------------------------------
 " plugin: tabular
@@ -354,11 +339,27 @@ map <leader>a/ :Tabularize /\/\/<cr>
 
 
 "--------------------------------------------------------------------------------
+" gitgutter
+"--------------------------------------------------------------------------------
+" undo (revent) current hunk, via gitgutter
+map <leader>gu :GitGutterUndoHunk<CR>
+
+" ctl-j / ctl-k: navigate to prev/next change lines (per gitgutter).  Using same mappings as in Araxis Merge
+map <C-J> <Plug>GitGutterNextHunk
+map <C-K> <Plug>GitGutterPrevHunk
+
+" make gitgutter snappier at updating the gutter.  Default is 4000.  Tune down if misbehaving
+set updatetime=500
+
+
+"--------------------------------------------------------------------------------
 " plugin: dash
 "--------------------------------------------------------------------------------
 
 " dash.vim - open dash for word under cursor
 map <leader>d :Dash<cr>
+
+
 
 "--------------------------------------------------------------------------------
 " reference
