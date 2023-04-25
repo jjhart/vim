@@ -62,6 +62,12 @@ else
   set t_Co=256         " enable broader color palette
 endif
 
+" out of the box, macvim supports standard OS X prev/next tab keys, but vimr does not, so we need these to replicate
+if has('gui_vimr')
+  map <S-D-}> :tabnext<CR>
+  map <S-D-{> :tabnext -<CR>
+endif
+
 "--------------------------------------------------------------------------------
 " filetypes, autocommands
 "--------------------------------------------------------------------------------
@@ -84,6 +90,8 @@ au BufRead,BufNewFile *.resource  set filetype=javascript
 au BufRead,BufNewFile *.dashboard set filetype=javascript
 au BufRead,BufNewFile *.gs        set filetype=javascript
 au BufRead,BufNewFile *.md        set filetype=markdown
+au BufRead,BufNewFile status      set filetype=markdown
+au BufRead,BufNewFile czar-status set filetype=markdown
 au BufRead,BufNewFile *.md        setlocal wrap linebreak nolist display+=lastline formatoptions-=c
 au BufRead,BufNewFile bash-fc-*   set filetype=sh    " bash 'fc' command uses $EDITOR to edit last command.  These files are named "bash-fc-..."; set their type accordingly
 
@@ -263,7 +271,7 @@ call pathogen#runtime_append_all_bundles()
 " put yankring history file into .vim dir, instead of straight in $HOME
 let g:yankring_history_dir = '$HOME/.vim'
 
-" equivalent to 'nnoremap Y y$', but with yankring; this *had* been before pathogen but that doesn't make sense to me
+" equivalent to 'nnoremap Y y$', but with yankring
 function! YRRunAfterMaps()
     nnoremap Y   :<C-U>YRYankCount 'y$'<CR>
 endfunction
