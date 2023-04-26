@@ -343,8 +343,8 @@ map <leader>a/ :Tabularize /\/\/<cr>
 map <leader>gu :GitGutterUndoHunk<CR>
 
 " ctl-j / ctl-k: navigate to prev/next change lines (per gitgutter).  Using same mappings as in Araxis Merge
-map <C-J> <Plug>GitGutterNextHunk
-map <C-K> <Plug>GitGutterPrevHunk
+map <C-J> <Plug>(GitGutterNextHunk)
+map <C-K> <Plug>(GitGutterPrevHunk)
 
 " make gitgutter snappier at updating the gutter.  Default is 4000.  Tune down if misbehaving
 set updatetime=500
