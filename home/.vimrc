@@ -163,6 +163,7 @@ vmap <leader>sn :'<,'>sort n<CR>gv<CR>:'<,'>!tail -r<CR>
 
 " 'tagbar-toggle'
 let g:tagbar_width = 80
+let g:tagbar_left = 1
 nmap <leader>tb :TagbarToggle<CR>
 
 " horizontal rule
@@ -297,6 +298,7 @@ function! GithubLink()
   " set pwd to repo root dir...
   Gcd
   " ... so bufname gives us a path from the top
+  " TODO - sniff the repo name, determine GH vs GHE URL, etc.
   let filename = bufname("%")
   let linenumber = line(".")
   let url = 'https://github.com/scalyr/scalyr/blob/master/' . filename . "#L" . linenumber
@@ -308,6 +310,7 @@ command! GithubLink call s:GithubLink()
 
 nnoremap <leader>gl :echo GithubLink()<cr>
 
+map <leader>gx :open<cr>
 
 "--------------------------------------------------------------------------------
 " ctags - not a plugin, but depends on fugitive
