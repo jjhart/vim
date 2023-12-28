@@ -39,7 +39,7 @@ set guioptions-=T            " turn off the never-used toolbar buttons
 set clipboard=unnamed        " use the OS X clipboard for copy/paste (if no register is specified).  Thus, yy in vim will write to the system clipboard & can be pasted with Cmd-C
 set wildmode=list:longest    " make tab-completion behave like bash shell
 set autochdir                " always set vim's pwd to current file dir
-set synmaxcol=250            " only syntax highlight the first 250 columns; makes a big speed difference for wide files
+set synmaxcol=400            " only syntax highlight the first 250 columns; makes a big speed difference for wide files
 set shell=bash\ --login      " source .bash_login etc when executing shellouts; note aliases don't work regardless =(
 set cursorline               " enable cursorline coloring
 set relativenumber           " show line number column w/ relative line numbers
@@ -223,7 +223,7 @@ map <leader>rl :e! %<CR>
 " <C-hd> & <C-l> move cursor back & forth
 " ,wh open help in a vertical split
 " ,wa writes current buffer to ~/a
-nnoremap <leader>wo <C-W>v10<C-W><
+nnoremap <leader>wo <C-W>v60<C-W><
 nnoremap <C-H> <C-W>h
 nnoremap <C-L> <C-W>l
 nnoremap <leader>wk <C-W>o
