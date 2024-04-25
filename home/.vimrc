@@ -122,7 +122,7 @@ inoremap {} {<CR>}<Esc>kA<CR>
 au BufWritePre        */src/scalyr/*,*/GoogleDrive/NOTES/*  call s:strip_ws()|                      " remove trailing whitespace on save; strip_ws defined below
 
 " 'test-no': comment out all @Test annotations except the current (next above cursor) and return cursor to current location
-nmap <leader>tn ma:%s~\v (\@\w*Test)~ /*\1 JH-NOCOMMIT*/~<CR>`a?@.*Test<CR>Bxxeldf/`a:w<CR>
+nmap <leader>tn ma:%s~\v (\@\w*Test(\(\))?)~ /*\1 JH-NOCOMMIT*/~<CR>`a?@.*Test<CR>Bxxeldf/`a:w<CR>
 " 'test-yes': uncomment @Test annotations, return cursor
 nmap <leader>ty ma:%s~\v/\*(.*) JH-NOCOMMIT\*/~\1~<CR>`a:w<CR>
 
@@ -297,16 +297,58 @@ map <leader>gb :Gblame<CR>
 function! GithubLink()
   " set pwd to repo root dir...
   Gcd
-  " ... so bufname gives us a path from the top
-  " TODO - sniff the repo name, determine GH vs GHE URL, etc.
+  " ... so bufname gives us a path relative to the top of the repo
   let filename = bufname("%")
+  " ... and we can extract the final component of pwd to use as the reponame
+  let repo = reverse(split(getcwd(""), "/"))[0] 
   let linenumber = line(".")
-  let url = 'https://github.com/scalyr/scalyr/blob/master/' . filename . "#L" . linenumber
-  let output = system('pbcopy', url)
+  let url = 'https://ghe.eng.sentinelone.tech/sentinel-one/' . repo . '/blob/master/' . filename . "#L" . linenumber
+
+  " copy to system clipboard
+  let @+ = url
   return url
 endfunction
 
 command! GithubLink call s:GithubLink()
+
+" alternate version from https://chat.openai.com/share/960ac161-037f-43af-8511-61efb9398433
+" this is more general than mine, in a couple ways:
+" - doesn't require fugitive for Gcd
+" - doesn't assume `master` branch (which is TBH a feature for me, except for repos that use main...)
+" - doesn't assume the local directory name matches the repo name
+" ... but it's also a fair bit slower (those 3 system calls!)
+function! GithubLinkOpenAI()
+    " Get the current file path relative to the git repository root
+    let l:file_path = system('git rev-parse --show-prefix')[:-2] . expand('%:t')
+
+    " Get the current line number
+    let l:line_number = line('.')
+
+    " Get the current git branch
+    let l:branch = system('git rev-parse --abbrev-ref HEAD')[:-2]
+
+    " Construct the URL for the GitHub Enterprise instance
+    let l:base_url = 'https://ghe.eng.sentinelone.tech/sentinel-one'
+
+    " Extract repository name from git configuration
+    let l:remote_url = system("git config --get remote.origin.url")
+    " buggy version from openai
+    " let l:repo_name = matchstr(l:remote_url, '\v[^/:]+/[^/]+(?=\.git$)')
+    " fixed:
+    let l:repo_name = split(split(l:remote_url, ":")[1], "/")[0]
+
+    " Construct the full URL
+    let l:full_url = l:base_url . '/' . l:repo_name . '/blob/' . l:branch . '/' . l:file_path . '#L' . l:line_number
+
+    " Copy the URL to the clipboard
+    let @+ = l:full_url
+
+    " Optionally, print the URL
+    echo 'GitHub URL copied to clipboard: ' . l:full_url
+endfunction
+
+" Bind the function to a key, e.g., <Leader>gl
+" nnoremap <Leader>gl :call GithubLinkOpenAI()<CR>
 
 nnoremap <leader>gl :echo GithubLink()<cr>
 
