@@ -75,6 +75,7 @@ au BufRead,BufNewFile *.readme    set filetype=sh
 au BufRead,BufNewFile *.txt       set filetype=sh
 au BufRead,BufNewFile *.conf      set filetype=sh
 au BufRead,BufNewFile *.log       set filetype=java
+au BufRead,BufNewFile *.jshell    set filetype=java
 au BufRead,BufNewFile *.object    set filetype=xml
 au BufRead,BufNewFile *.page      set filetype=html
 au BufRead,BufNewFile *.cls       set filetype=apex
