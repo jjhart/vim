@@ -43,6 +43,7 @@ set synmaxcol=400            " only syntax highlight the first 250 columns; make
 set shell=bash\ --login      " source .bash_login etc when executing shellouts; note aliases don't work regardless =(
 set cursorline               " enable cursorline coloring
 set relativenumber           " show line number column w/ relative line numbers
+set number                   " this in combination with the above shows the absolute number for only the current line
 set visualbell               " screen flash instead of sysbeep on various errors, like ESC-when-already-in-normal-mode
 set laststatus=2             " always show statusline
 set statusline =%f\ %h%m%r%w " File description, note this is = not +=

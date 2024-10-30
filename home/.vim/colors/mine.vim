@@ -18,6 +18,7 @@ hi Normal          ctermfg=LightGrey guifg=LightGrey guibg=black
 hi Visual          guifg=NONE        guibg=#1155BB     gui=NONE      ctermfg=NONE        ctermbg=darkgray    cterm=NONE
 hi CursorLine      cterm=NONE ctermbg=234 guibg=#333333
 hi LineNr          guifg=#555555
+hi CursorLineNr    guifg=#555555
 hi Comment         ctermfg=LightBlue guifg=SkyBlue  gui=NONE
 hi PerlPOD         ctermfg=LightBlue guifg=SkyBlue  gui=NONE
 hi PerlBareword    guifg=#5d90cd   gui=NONE
