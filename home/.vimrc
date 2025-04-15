@@ -173,7 +173,7 @@ imap <D-H> ---------------------------------------------------------------------
 nmap <D-H> 0i<D-H><Esc>
 
 " insert newlines without entering insert mode (like o/O, but without going into insert mode)
-map <S-Enter> O<Esc>
+" map <S-Enter> O<Esc>  " shift-enter is now "close window split" to pair with Alt-Enter, below
 map <CR> o<Esc>
 
 
@@ -219,13 +219,13 @@ map <leader>rl :e! %<CR>
 "--------------------------------------------------------------------------------
 " ,w commands: split screen & misc.
 "--------------------------------------------------------------------------------
-" ,wo opens vertical split, and shrink left pane by 60 to center new pane
+" ,wo opens vertical split, and shrink left pane by 60 to center new pane, puts cursor in new pane
 " ,wk keeps current split, closes others
 " ,wc closes current split window
 " <C-hd> & <C-l> move cursor back & forth
 " ,wh open help in a vertical split
 " ,wa writes current buffer to ~/a
-nnoremap <leader>wo <C-W>v60<C-W><
+nnoremap <leader>wo <C-W>v60<C-W>l
 nnoremap <C-H> <C-W>h
 nnoremap <C-L> <C-W>l
 nnoremap <leader>wk <C-W>o
@@ -365,9 +365,14 @@ set tags=~/src/*/*/.tags,~/src/*/.tags,~/src/*/thirdparty/*/.tags
 command! RefreshTags Gcd | normal :!ctags -R -f ./.tags .<CR>                    " regen/update tags file at root for current file's git repo
 command! ScalyrTags Gcd | normal :!ctags -R -f ./.tags ScalyrSite/{src,test}<CR> " scalyr-specific version that only scans ScalyrSite/src
 
-" open tag-under-cursor in new tab, h/ http://stackoverflow.com/questions/539231/how-to-use-multiple-tabs-when-tagging-to-a-function-in-vim
-nmap <C-Enter> <C-w><C-]><C-w>T
+" open tag-under-cursor in new MacVim tab, h/t http://stackoverflow.com/questions/539231/how-to-use-multiple-tabs-when-tagging-to-a-function-in-vim
+" nmap <C-Enter> <C-w><C-]><C-w>T
 
+" open tag-under-cursor in new split of current tab, h/t the above plus https://vi.stackexchange.com/questions/14820/shortcut-to-open-definition-of-variable-in-a-vertical-split
+nmap <C-Enter> :rightb vert winc ]<CR>
+
+" just like <leader>wc, to close current tab, but using Shift-Enter to mirror Ctl-Enter
+nnoremap <S-Enter> <C-W>c
 
 "--------------------------------------------------------------------------------
 " plugin: tabular
